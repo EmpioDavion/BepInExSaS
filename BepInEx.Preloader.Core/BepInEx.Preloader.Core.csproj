@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>Core classes and utilities for BepInEx Preloader</Description>
+        <TargetFrameworks>net35;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <AssemblyTitle>BepInEx.Preloader.Core</AssemblyTitle>
+        <Product>BepInEx.Preloader.Core</Product>
+        <OutputPath>..\bin\Core</OutputPath>
+        <DocumentationFile>$(OutputPath)\$(TargetFramework)\BepInEx.Preloader.Core.xml</DocumentationFile>
+        <LangVersion>10</LangVersion>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugType>full</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <DebugType>full</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>none</DebugType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <DebugType>none</DebugType>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\BepInEx.Core\BepInEx.Core.csproj" />
+    </ItemGroup>
+    <Import Project="..\BepInEx.Shared\BepInEx.Shared.projitems" Label="Shared" />
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
+        <PackageReference Include="HarmonyX" Version="2.10.0" />
+        <PackageReference Include="MonoMod.RuntimeDetour" Version="22.3.23.4" />
+        <PackageReference Include="MonoMod.Utils" Version="22.3.23.4" />
+    </ItemGroup>
+</Project>

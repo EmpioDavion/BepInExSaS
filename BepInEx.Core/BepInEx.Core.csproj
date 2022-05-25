@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>BepInEx Core library</Description>
+        <TargetFrameworks>net35;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <AssemblyTitle>BepInEx</AssemblyTitle>
+        <Product>BepInEx</Product>
+        <LangVersion>10</LangVersion>
+        <OutputPath>..\bin\Core\</OutputPath>
+        <DocumentationFile>$(OutputPath)\$(TargetFramework)\BepInEx.Core.xml</DocumentationFile>
+        <Description>Unity plugin injection framework</Description>
+        <!-- Force nuget assembly output on netstandard2.1 -->
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <Platforms>AnyCPU;x64</Platforms>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>none</DebugType>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <DebugType>none</DebugType>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <DebugType>portable</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
+        <PackageReference Include="HarmonyX" Version="2.10.0" />
+        <PackageReference Include="MonoMod.Utils" Version="22.3.23.4" />
+        <PackageReference Include="SemanticVersioning" Version="2.0.2" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Contract\IPlugin.cs" />
+    </ItemGroup>
+    <Import Project="..\BepInEx.Shared\BepInEx.Shared.projitems" Label="Shared" />
+
+    <!-- CopyLocalLockFileAssemblies causes to also output shared assemblies: https://github.com/NuGet/Home/issues/4837#issuecomment-354536302 -->
+    <!-- Since all core assemblies usually follow naming of System.*, we just delete them for now -->
+    <!-- Also delete deps.json as they are not used by mono -->
+    <Target Name="DeleteSys" AfterTargets="Build">
+        <ItemGroup>
+            <FilesToDelete Include="$(OutputPath)System.*.dll" />
+            <FilesToDelete Include="$(OutputPath)*.deps.json" />
+        </ItemGroup>
+        <Delete Files="@(FilesToDelete)" />
+    </Target>
+</Project>

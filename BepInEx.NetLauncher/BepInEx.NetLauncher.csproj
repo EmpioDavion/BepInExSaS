@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>BepInEx support library for .NET games</Description>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net452</TargetFramework>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <AssemblyTitle>BepInEx.NetLauncher</AssemblyTitle>
+        <Product>BepInEx.NetLauncher</Product>
+        <LangVersion>10</LangVersion>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <BaseOutputPath></BaseOutputPath>
+        <Platforms>x86;x64</Platforms>
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+        <DebugType>full</DebugType>
+        <OutputPath>bin\Debug\x86</OutputPath>
+        <PlatformTarget>x86</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <DebugType>full</DebugType>
+      <OutputPath>bin\Debug\x64</OutputPath>
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+        <DebugType>portable</DebugType>
+        <OutputPath>bin\Release\x86</OutputPath>
+        <DocumentationFile />
+        <PlatformTarget>x86</PlatformTarget>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <DebugType>portable</DebugType>
+      <OutputPath>bin\Release\x64</OutputPath>
+      <DocumentationFile />
+      <PlatformTarget>x64</PlatformTarget>
+      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\BepInEx.Core\BepInEx.Core.csproj" />
+        <ProjectReference Include="..\BepInEx.NetLauncher.Common\BepInEx.NetLauncher.Common.csproj" />
+        <ProjectReference Include="..\BepInEx.Preloader.Core\BepInEx.Preloader.Core.csproj" PrivateAssets="All" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="HarmonyX" Version="2.10.0" />
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="All" />
+    </ItemGroup>
+    <Import Project="..\BepInEx.Shared\BepInEx.Shared.projitems" Label="Shared" />
+    <Import Project="..\BepInEx.NetLauncher.Shared\BepInEx.NetLauncher.Shared.projitems" Label="Shared" />
+  <Target Name="SetupDestinationSubDirectory" AfterTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Update="*" DestinationSubDirectory="BepInEx/core/" />
+    </ItemGroup>
+  </Target>
+</Project>
